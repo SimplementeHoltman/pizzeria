@@ -34,9 +34,10 @@
                 <ul>
                     @foreach ($category->products as $product)
                         <li>
-                            <strong>{{ $product->nombre }}</strong> - 
-                            {{ $product->descripcion }} - 
-                            Precio: Q{{ $product->precio }}
+                            <a href="{{ route('productos.show', $product->id) }}">
+                                <strong>{{ $product->nombre }}</strong>
+                            </a>
+                            Q{{ $product->precio }}
                         </li>
                     @endforeach
                 </ul>

@@ -20,3 +20,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+
+// Ruta para los detalles del producto
+Route::get('/productos/{id}', [ProductController::class, 'show'])->name('productos.show');
