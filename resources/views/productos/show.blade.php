@@ -14,6 +14,12 @@
             </div>
         @endif
 
+        <!-- Botón para agregar al carrito -->
+        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+        </form>
+
         <a href="{{ url()->previous() }}">Volver a la lista de productos</a>
     </div>
 @endsection

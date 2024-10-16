@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+
 
 Route::get('/', [CategoryController::class, 'index'])->name('home');
 Route::get('/categorias', [CategoryController::class, 'index'])->name('categories');
@@ -23,3 +25,10 @@ Route::get('/dashboard', function () {
 
 // Ruta para los detalles del producto
 Route::get('/productos/{id}', [ProductController::class, 'show'])->name('productos.show');
+
+
+// Ruta para agregar productos al carrito
+Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+
+// Ruta para mostrar el carrito (dashboard)
+Route::get('/dashboard', [CartController::class, 'showCart'])->name('dashboard')->middleware('auth');
