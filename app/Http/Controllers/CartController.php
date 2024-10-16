@@ -8,11 +8,9 @@ use App\Models\CartItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
-
-
 class CartController extends Controller
 {
-    // Método para agregar un producto al carrito
+    // Método para agregar un producto al carrito (ya implementado previamente)
     public function addToCart($id)
     {
         // Verifica si el usuario está autenticado
@@ -35,9 +33,15 @@ class CartController extends Controller
             ->first();
 
         if ($cartItem) {
-            // Si ya está en el carrito, aumentar la cantidad
-            $cartItem->cantidad += 1;
-            $cartItem->save();
+            // Si ya está en el carrito, aumentar la cantidad si no supera el stock
+            if ($cartItem->cantidad < $product->stock) {
+                $cartItem->cantidad += 1;
+                $cartItem->save();
+                $cart->total += $product->precio;
+                $cart->save();
+            } else {
+                return redirect()->route('dashboard')->with('error', 'No puedes agregar más de este producto, has alcanzado el stock.');
+            }
         } else {
             // Si no está en el carrito, agregarlo
             CartItem::create([
@@ -46,13 +50,63 @@ class CartController extends Controller
                 'cantidad' => 1,
                 'precio_unitario' => $product->precio,
             ]);
+
+            $cart->total += $product->precio;
+            $cart->save();
         }
 
-        // Actualizar el total del carrito
-        $cart->total += $product->precio;
+        return redirect()->route('dashboard')->with('success', 'Producto agregado al carrito.');
+    }
+
+    // Método para aumentar la cantidad de un producto en el carrito
+    public function increaseQuantity($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+        $product = Product::findOrFail($cartItem->producto_id);
+
+        if ($cartItem->cantidad < $product->stock) {
+            $cartItem->cantidad += 1;
+            $cartItem->save();
+
+            $cart = $cartItem->cart;
+            $cart->total += $product->precio;
+            $cart->save();
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    // Método para disminuir la cantidad de un producto en el carrito
+    public function decreaseQuantity($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+
+        if ($cartItem->cantidad > 1) {
+            $cartItem->cantidad -= 1;
+            $cartItem->save();
+
+            $cart = $cartItem->cart;
+            $cart->total -= $cartItem->precio_unitario;
+            $cart->save();
+        }
+
+        return redirect()->route('dashboard');
+    }
+
+    // Método para eliminar un producto del carrito
+    public function removeItem($id)
+    {
+        $cartItem = CartItem::findOrFail($id);
+        $cart = $cartItem->cart;
+
+        // Restar el subtotal del producto al total del carrito
+        $cart->total -= ($cartItem->cantidad * $cartItem->precio_unitario);
         $cart->save();
 
-        return redirect()->route('dashboard')->with('success', 'Producto agregado al carrito.');
+        // Eliminar el item del carrito
+        $cartItem->delete();
+
+        return redirect()->route('dashboard');
     }
 
     // Método para mostrar los productos en el carrito (dashboard)

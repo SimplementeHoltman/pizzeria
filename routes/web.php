@@ -29,6 +29,12 @@ Route::get('/productos/{id}', [ProductController::class, 'show'])->name('product
 
 // Ruta para agregar productos al carrito
 Route::post('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
-
 // Ruta para mostrar el carrito (dashboard)
 Route::get('/dashboard', [CartController::class, 'showCart'])->name('dashboard')->middleware('auth');
+
+// Rutas para aumentar/disminuir cantidad
+Route::post('/cart/increase/{id}', [CartController::class, 'increaseQuantity'])->name('cart.increase');
+Route::post('/cart/decrease/{id}', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
+
+// Ruta para eliminar productos del carrito
+Route::post('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('cart.remove');
