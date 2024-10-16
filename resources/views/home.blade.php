@@ -10,43 +10,37 @@
             <a href="{{ route('contact') }}">Contacto</a>
             <div class="float-right">
                 @if (Auth::check())
-                    <!-- Mostrar Dashboard y Logout si el usuario está autenticado -->
                     <a href="{{ route('dashboard') }}">Dashboard</a> |
                     <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
                 @else
-                    <!-- Mostrar Login y Registro si el usuario no está autenticado -->
                     <a href="{{ route('login') }}">Login</a> |
                     <a href="{{ route('register') }}">Registro</a>
                 @endif
             </div>
-
         </nav>
 
-        <!-- Mostrar categorías -->
-        <h2>Categorías</h2>
-        <ul>
-            @foreach ($categories as $category)
-                <li>{{ $category->nombre }}</li>
-            @endforeach
-        </ul>
+        <!-- Mostrar categorías y productos -->
+        <h2>Categorías y Productos</h2>
 
-        <!-- Mostrar productos -->
-        <h2>Productos</h2>
-        <div class="row">
-            @foreach ($products as $product)
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $product->nombre }}</h5>
-                            <p class="card-text">{{ $product->descripcion }}</p>
-                            <p class="card-text">Precio: Q{{ $product->precio }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+        @foreach ($categories as $category)
+            <div class="category">
+                <h3>{{ $category->nombre }}</h3>
+                <p>{{ $category->descripcion }}</p>
+
+                <h4>Productos:</h4>
+                <ul>
+                    @foreach ($category->products as $product)
+                        <li>
+                            <strong>{{ $product->nombre }}</strong> - 
+                            {{ $product->descripcion }} - 
+                            Precio: Q{{ $product->precio }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        @endforeach
     </div>
 @endsection

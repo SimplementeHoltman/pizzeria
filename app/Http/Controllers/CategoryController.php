@@ -10,11 +10,10 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        // Obtener todas las categorías y productos
-        $categories = Category::all();
-        $products = Product::all();
+        // Obtener todas las categorías con sus productos relacionados
+        $categories = Category::with('products')->get();
 
-        // Retornar la vista con los datos
-        return view('home', compact('categories', 'products'));
+        // Retornar la vista con las categorías y productos
+        return view('home', compact('categories'));
     }
 }
