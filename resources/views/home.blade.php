@@ -37,7 +37,14 @@
                             <a href="{{ route('productos.show', $product->id) }}">
                                 <strong>{{ $product->nombre }}</strong>
                             </a>
-                            Q{{ $product->precio }}
+                            Precio: Q{{ $product->precio }}
+
+                            <!-- Mostrar la imagen del producto -->
+                            @if($product->imagen)
+                                <div>
+                                    <img src="{{ asset('imagenes-productos/' . $product->imagen) }}" alt="{{ $product->nombre }}" style="width: 150px; height: auto;">
+                                </div>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

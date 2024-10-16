@@ -14,10 +14,14 @@ return new class extends Migration
             $table->text('descripcion')->nullable();
             $table->decimal('precio', 10, 2);
             $table->integer('stock');
+            $table->string('imagen')->nullable(); // Nueva columna para el nombre de la imagen
             $table->foreignId('categoria_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
-    
-    
+
+    public function down()
+    {
+        Schema::dropIfExists('products');
+    }
 };
