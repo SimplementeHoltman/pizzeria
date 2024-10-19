@@ -38,3 +38,4 @@ Route::post('/cart/remove/{id}', [CartController::class, 'removeItem'])->name('c
 Route::get('/dashboard', [AddressController::class, 'index'])->name('dashboard');
 Route::post('/addresses', [AddressController::class, 'store'])->name('address.store');
 Route::post('/addresses', [App\Http\Controllers\AddressController::class, 'store'])->name('address.store');
+Route::delete('/addresses/{id}', [App\Http\Controllers\AddressController::class, 'destroy'])->name('address.destroy');

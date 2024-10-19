@@ -102,19 +102,44 @@
             <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Guardar Dirección</button>
         </form>
 
-        <!-- Mostrar direcciones guardadas -->
         <h2>Direcciones Guardadas</h2>
         @if(isset($addresses) && !$addresses->isEmpty())
-            <select id="address-select" class="form-select">
-                @foreach($addresses as $address)
-                    <option value="{{ $address->latitud }},{{ $address->longitud }}">
-                        {{ $address->direccion }} - {{ $address->ciudad }}
-                    </option>
-                @endforeach
-            </select>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Seleccionar</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Código Postal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($addresses as $address)
+                        <tr>
+                            <td>
+                                <!-- Checkbox para seleccionar la dirección -->
+                                <input type="checkbox" class="address-checkbox" value="{{ $address->latitud }},{{ $address->longitud }}">
+                            </td>
+                            <td>{{ $address->direccion }}</td>
+                            <td>{{ $address->ciudad }}</td>
+                            <td>{{ $address->codigo_postal }}</td>
+                            <td>
+                                <!-- Formulario para eliminar la dirección -->
+                                <form action="{{ route('address.destroy', $address->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         @else
             <p>No tienes direcciones guardadas.</p>
         @endif
+
 
         <div id="map-address" style="height: 300px; width: 100%; margin-top: 20px;"></div>
 
@@ -184,15 +209,27 @@
                 map: mapAddress,
             });
 
-            document.getElementById('address-select').addEventListener('change', function () {
-                const coords = this.value.split(',');
-                const newLatLng = { lat: parseFloat(coords[0]), lng: parseFloat(coords[1]) };
+            // Cambiar el mapa y marcador cuando se seleccione una dirección, solo permitir una selección a la vez
+            document.querySelectorAll('.address-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    // Deseleccionar todos los otros checkboxes
+                    document.querySelectorAll('.address-checkbox').forEach(box => {
+                        if (box !== checkbox) {
+                            box.checked = false;
+                        }
+                    });
 
-                markerAddress.setPosition(newLatLng);
-                mapAddress.setCenter(newLatLng);
+                    // Si se selecciona un checkbox, actualizar el mapa
+                    if (this.checked) {
+                        const coords = this.value.split(',');
+                        const newLatLng = { lat: parseFloat(coords[0]), lng: parseFloat(coords[1]) };
+                        
+                        markerAddress.setPosition(newLatLng);
+                        mapAddress.setCenter(newLatLng);
+                    }
+                });
             });
         }
-
         // Inicializar todos los mapas al cargar la página
         window.addEventListener('load', function () {
             if (typeof initMap === 'function') {

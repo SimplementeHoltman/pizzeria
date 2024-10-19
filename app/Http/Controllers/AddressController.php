@@ -61,4 +61,18 @@ class AddressController extends Controller
         // Redirigir de vuelta al dashboard con un mensaje de éxito
         return redirect()->route('dashboard')->with('success', 'Dirección guardada correctamente.');
     }
+    
+    public function destroy($id)
+    {
+        // Encontrar la dirección por su ID y asegurarse de que pertenece al usuario autenticado
+        $address = Address::where('id', $id)->where('usuario_id', Auth::id())->firstOrFail();
+        
+        // Eliminar la dirección
+        $address->delete();
+        
+        // Redirigir al dashboard con un mensaje de éxito
+        return redirect()->route('dashboard')->with('success', 'Dirección eliminada correctamente.');
+    }
+    
+    
 }
