@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\Branch; // Importamos el modelo Branch
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    // Método para agregar un producto al carrito (ya implementado previamente)
+    // Método para agregar un producto al carrito
     public function addToCart($id)
     {
         // Verifica si el usuario está autenticado
@@ -109,22 +110,26 @@ class CartController extends Controller
         return redirect()->route('dashboard');
     }
 
-    // Método para mostrar los productos en el carrito (dashboard)
+    // Método para mostrar los productos en el carrito (dashboard) y las sucursales
     public function showCart()
     {
         // Obtener el carrito activo del usuario
         $cart = Cart::where('usuario_id', Auth::id())->where('estado', 'activo')->first();
-
+    
         if (!$cart) {
-            return view('dashboard', ['cartItems' => [], 'total' => 0.00]);
+            return view('dashboard', ['cartItems' => [], 'total' => 0.00, 'branches' => Branch::all()]);
         }
-
+    
         // Obtener los items del carrito
         $cartItems = CartItem::where('carretilla_id', $cart->id)->with('product')->get();
-
+    
+        // Obtener todas las sucursales
+        $branches = Branch::all();
+    
         return view('dashboard', [
             'cartItems' => $cartItems,
             'total' => $cart->total,
+            'branches' => $branches, // Pasar las sucursales a la vista
         ]);
     }
 }
