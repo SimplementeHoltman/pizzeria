@@ -11,31 +11,30 @@ use Illuminate\Support\Facades\Auth;
 
 class AddressController extends Controller
 {
-    // Método para obtener todas las direcciones del usuario
     public function index()
     {
         // Obtener las direcciones del usuario autenticado
         $addresses = Address::where('usuario_id', Auth::id())->get();
-    
+        
         // Obtener las sucursales
         $branches = Branch::all();
-    
-        // Obtener el carrito del usuario
+        
+        // Obtener el carrito activo del usuario
         $cart = Cart::where('usuario_id', Auth::id())->where('estado', 'activo')->first();
-    
+        
         // Definir el total del carrito
         $total = $cart ? $cart->total : 0.00;
+        
+        // Obtener los items del carrito
+        $cartItems = $cart ? CartItem::where('carretilla_id', $cart->id)->get() : [];
+        
+        // Obtener los carritos en estado 'procesando' pero solo del usuario autenticado
+        $processingCarts = Cart::where('estado', 'procesando')->where('usuario_id', Auth::id())->get();
     
-        // Obtener los items del carrito usando `carretilla_id`
-        $cartItems = [];
-        if ($cart) {
-            $cartItems = CartItem::where('carretilla_id', $cart->id)->get();
-        }
-    
-        // Pasar las variables a la vista
-        return view('dashboard', compact('branches', 'cartItems', 'addresses', 'total'));
+        // Pasar todas las variables necesarias a la vista
+        return view('dashboard', compact('branches', 'cartItems', 'addresses', 'total', 'processingCarts'));
     }
-
+    
     // Método para guardar una nueva dirección
     public function store(Request $request)
     {

@@ -110,35 +110,56 @@ class CartController extends Controller
         return redirect()->route('dashboard');
     }
 
-    // Método para mostrar los productos en el carrito (dashboard) y las sucursales
     public function showCart()
     {
         // Obtener el carrito activo del usuario
         $cart = Cart::where('usuario_id', Auth::id())->where('estado', 'activo')->first();
-        
-        // Verificar si el carrito existe
-        if (!$cart) {
-            // Asegurarse de que `total` siempre esté definido
-            return view('dashboard', [
-                'cartItems' => [],
-                'total' => 0.00, 
-                'branches' => Branch::all()
-            ]);
-        }
-        
-        // Obtener los items del carrito usando la columna `carretilla_id`
-        $cartItems = CartItem::where('carretilla_id', $cart->id)->get();
+    
+        // Obtener los carritos en proceso
+        $processingCarts = Cart::where('estado', 'procesando')->get();
+    
+        // Definir el total del carrito
+        $total = $cart ? $cart->total : 0.00;
+    
+        // Obtener los items del carrito si el carrito existe
+        $cartItems = $cart ? CartItem::where('carretilla_id', $cart->id)->get() : [];
     
         // Obtener todas las sucursales
         $branches = Branch::all();
-        
-        // Pasar los datos a la vista
-        return view('dashboard', [
-            'cartItems' => $cartItems,
-            'total' => $cart->total, // Asegúrate de que la variable `$total` esté disponible
-            'branches' => $branches,
-        ]);
+    
+        // Pasar las variables a la vista
+        return view('dashboard', compact('cartItems', 'total', 'processingCarts', 'branches'));
     }
     
     
+    
+    
+    public function processPayment(Request $request)
+    {
+        // Obtener el carrito activo del usuario
+        $cart = Cart::where('usuario_id', Auth::id())->where('estado', 'activo')->first();
+    
+        if (!$cart) {
+            return redirect()->route('dashboard')->with('error', 'No hay carritos activos.');
+        }
+    
+        // Cambiar el estado del carrito a "procesando"
+        $cart->estado = 'procesando';
+        $cart->save();
+    
+        return redirect()->route('dashboard')->with('success', 'Pago realizado. Carrito en proceso.');
+    }
+    
+
+    // Método para finalizar el carrito y eliminarlo
+    public function completeCart($id)
+    {
+        $cart = Cart::findOrFail($id);
+
+        // Eliminar el carrito y sus items
+        $cart->cartItems()->delete();
+        $cart->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Carrito finalizado y eliminado.');
+    } 
 }

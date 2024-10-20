@@ -145,6 +145,57 @@
 
         <a href="{{ route('home') }}" class="btn btn-primary" style="margin-top: 20px;">Volver al Inicio</a>
     </div>
+        <!-- Formulario de Pago -->
+        <h2>Selecciona el método de pago</h2>
+        <form action="{{ route('cart.payment') }}" method="POST">
+            @csrf
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="metodo_pago" id="pagoEfectivo" value="efectivo" required>
+                <label class="form-check-label" for="pagoEfectivo">Pago en Efectivo (contra entrega)</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="metodo_pago" id="pagoTarjeta" value="tarjeta" required>
+                <label class="form-check-label" for="pagoTarjeta">Pago con Tarjeta</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Realizar Pago</button>
+        </form>
+        <h2>Carritos en Proceso</h2>
+@if($processingCarts->count() > 0)
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario ID</th>
+                <th>Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($processingCarts as $processingCart)
+                <tr>
+                    <td>{{ $processingCart->id }}</td>
+                    <td>{{ $processingCart->usuario_id }}</td>
+                    <td>Q{{ $processingCart->total }}</td>
+                    <td>
+                        <form action="{{ route('cart.complete', $processingCart->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success">Marcar como Entregado</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@else
+    <p>No hay carritos en proceso.</p>
+@endif
+
+
+
+
+
 
     <!-- Cargar Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMznw6Z7nd2ODWJv8WnYuE_MiAujSmLUc&callback=initMap" async defer></script>

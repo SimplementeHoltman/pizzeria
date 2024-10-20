@@ -39,3 +39,12 @@ Route::get('/dashboard', [AddressController::class, 'index'])->name('dashboard')
 Route::post('/addresses', [AddressController::class, 'store'])->name('address.store');
 Route::post('/addresses', [App\Http\Controllers\AddressController::class, 'store'])->name('address.store');
 Route::delete('/addresses/{id}', [App\Http\Controllers\AddressController::class, 'destroy'])->name('address.destroy');
+
+
+
+// Ruta para procesar el pago
+Route::post('/pago', [CartController::class, 'processPayment'])->name('cart.payment');
+
+// Ruta para finalizar el carrito
+Route::post('/cart/complete/{id}', [CartController::class, 'completeCart'])->name('cart.complete');
+
