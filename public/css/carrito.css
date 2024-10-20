@@ -1,0 +1,265 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos de la barra de navegación */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-bottom: 2px solid #ccc;
+    position: relative;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.site-title {
+    font-size: 24px;
+    color: #ff6347;
+    margin: 0;
+}
+
+#nav-toggle {
+    display: none;
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.nav-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Ocultar a nivel general */
+.hide-general {
+    display: none;
+}
+
+/* Tabla del carrito */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Asignamos anchos proporcionales a cada columna */
+table th:nth-child(1), table td:nth-child(1) {
+    width: 30%; /* Producto */
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    width: 10%; /* Cantidad */
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 20%; /* Precio Unitario */
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    width: 20%; /* Subtotal */
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    width: 20%; /* Acciones */
+}
+
+table th {
+    background-color: #f8f8f8;
+    color: #ff6347;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+table td {
+    font-size: 16px;
+}
+
+table td .btn {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff6347;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Estilos de formulario */
+form {
+    margin-top: 20px;
+}
+
+.form-check {
+    margin: 10px 0;
+}
+
+.form-check-label {
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* Estilos del mapa */
+#map, #map-add, #map-address {
+    height: 300px;
+    width: 100%;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #nav-toggle {
+        display: block;
+    }
+
+    .logo {
+        width: 40px;
+        margin-right: 5px;
+    }
+
+    .site-title {
+        font-size: 20px;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: #fff;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 15px;
+        font-size: 20px;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    table td .btn {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    form {
+        margin-top: 10px;
+    }
+
+    .form-check-label {
+        font-size: 14px;
+    }
+
+    .form-select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #map, #map-add, #map-address {
+        height: 200px;
+    }
+
+    /* Ocultar columnas en móviles */
+    .hide-mobile {
+        display: none;
+    }
+}

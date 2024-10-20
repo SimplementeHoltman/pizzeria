@@ -1,0 +1,181 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos de la barra de navegación */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-bottom: 2px solid #ccc;
+    position: relative; /* Para manejar el menú desplegable en móviles */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 125px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.site-title {
+    font-size: 24px;
+    color: #ff6347;
+    margin: 0;
+}
+
+/* Botón "hamburger" */
+#nav-toggle {
+    display: none;
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    padding: 8px 12px; /* Tamaño más pequeño del botón */
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: auto; /* Mueve el botón a la derecha */
+}
+
+/* Barra de navegación (enlaces) */
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.nav-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Menú oculto en móviles (por defecto) */
+.nav-menu {
+    display: flex;
+}
+
+.nav-menu.active {
+    display: flex;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    /* Mostrar el botón "hamburger" */
+    #nav-toggle {
+        display: block;
+    }
+
+    /* Ajustar logo y título en móviles */
+    .logo {
+        width: 75px; /* Tamaño más pequeño para móviles */
+        margin-right: 5px;
+    }
+
+    .site-title {
+        font-size: 20px;
+    }
+
+    /* Ajustar la disposición del menú en móviles */
+    .nav-menu {
+        display: none; /* Ocultamos el menú en móviles por defecto */
+        flex-direction: column; /* Apilamos los enlaces verticalmente */
+        width: 100%; /* El menú ocupa todo el ancho */
+        text-align: center;
+        background-color: #fff; /* Fondo blanco */
+        position: absolute; /* Asegura que el menú esté por debajo */
+        top: 100%; /* El menú aparece justo debajo de la barra de navegación */
+        left: 0;
+        z-index: 1;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Mostrar el menú cuando está activo */
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 15px;
+        font-size: 20px;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+}
+
+/* Estilos de productos en cuadrícula */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Enlace de los productos */
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para los títulos de productos */
+.product-item h4 {
+    color: #ff6347;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+/* Estilo para los precios */
+.product-item .product-price {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    padding: 5px;
+    border: 1px solid #cb381e;
+    border-radius: 5px;
+    background-color: #ff6347;
+}

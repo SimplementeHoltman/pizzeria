@@ -1,0 +1,213 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos de la barra de navegación */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-bottom: 2px solid #ccc;
+    position: relative;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.site-title {
+    font-size: 24px;
+    color: #ff6347;
+    margin: 0;
+}
+
+#nav-toggle {
+    display: none;
+    background-color: #ff6347;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: auto;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    font-size: 18px;
+}
+
+.nav-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilos de producto */
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+.product-info {
+    width: 50%; /* Descripción a la izquierda */
+}
+
+.product-image {
+    width: 30%; /* Imagen a la derecha */
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.product-details h1 {
+    font-size: 28px;
+    color: #ff6347;
+    margin-bottom: 10px;
+}
+
+.product-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.add-to-cart-form {
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff6347;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    #nav-toggle {
+        display: block;
+    }
+
+    .logo {
+        width: 40px;
+        margin-right: 5px;
+    }
+
+    .site-title {
+        font-size: 20px;
+    }
+
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        background-color: #fff;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .nav-menu a {
+        display: block;
+        padding: 15px;
+        font-size: 20px;
+        border-bottom: 1px solid #f0f0f0;
+        width: 100%;
+    }
+
+    /* Apilamos los elementos en móviles */
+    .product-details {
+        display: flex;
+        flex-direction: column; /* Cambiamos a disposición en columna */
+        align-items: center;
+        text-align: center;
+    }
+
+    .product-image {
+        order: 1; /* Mostrar imagen primero */
+        width: 100%; /* Ocupa todo el ancho */
+        margin-bottom: 20px;
+    }
+
+    .product-info {
+        width: 100%;
+        order: 2; /* Descripción después de la imagen */
+    }
+
+    .product-details h1 {
+        order: 3; /* Título después de la imagen */
+        font-size: 24px;
+    }
+
+    .product-details p {
+        order: 4; /* Descripción y precio después del título */
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .add-to-cart-form {
+        order: 5; /* Botón "Agregar al carrito" después del precio */
+        margin-top: 20px;
+    }
+
+    .btn-secondary {
+        order: 6; /* Botón "Volver" al final */
+        margin-top: 10px;
+    }
+
+    .product-image img {
+        max-width: 300px; /* Ajustamos la imagen para que no sea muy grande */
+        margin-bottom: 20px;
+    }
+}
