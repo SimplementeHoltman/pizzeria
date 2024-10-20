@@ -48,3 +48,7 @@ Route::post('/pago', [CartController::class, 'processPayment'])->name('cart.paym
 // Ruta para finalizar el carrito
 Route::post('/cart/complete/{id}', [CartController::class, 'completeCart'])->name('cart.complete');
 
+use App\Http\Controllers\ContactController;
+
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
+

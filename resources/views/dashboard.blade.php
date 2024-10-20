@@ -61,7 +61,7 @@
         </select>
 
         <!-- Contenedor del mapa de sucursales -->
-        <div id="map" style="height: 300px; width: 50%; margin-top: 20px;"></div>
+        <div id="map" style="height: 300px; width: 100%; margin-top: 20px;"></div>
 
         <!-- Formulario para agregar nueva dirección -->
         <h2>Agregar Dirección</h2>
@@ -71,16 +71,6 @@
 
         <form action="{{ route('address.store') }}" method="POST">
             @csrf
-            <div class="mb-3">
-                <label for="latitud" class="form-label">Latitud</label>
-                <input type="text" class="form-control" id="latitud" name="latitud" readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="longitud" class="form-label">Longitud</label>
-                <input type="text" class="form-control" id="longitud" name="longitud" readonly>
-            </div>
-
             <div class="mb-3">
                 <label for="direccion" class="form-label">Dirección</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" required>
@@ -143,7 +133,6 @@
 
         <div id="map-address" style="height: 300px; width: 100%; margin-top: 20px;"></div>
 
-        <a href="{{ route('home') }}" class="btn btn-primary" style="margin-top: 20px;">Volver al Inicio</a>
     </div>
         <!-- Formulario de Pago -->
         <h2>Selecciona el método de pago</h2>
@@ -162,41 +151,36 @@
             <button type="submit" class="btn btn-primary" style="margin-top: 20px;">Realizar Pago</button>
         </form>
         <h2>Carritos en Proceso</h2>
-@if($processingCarts->count() > 0)
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Usuario ID</th>
-                <th>Total</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($processingCarts as $processingCart)
-                <tr>
-                    <td>{{ $processingCart->id }}</td>
-                    <td>{{ $processingCart->usuario_id }}</td>
-                    <td>Q{{ $processingCart->total }}</td>
-                    <td>
-                        <form action="{{ route('cart.complete', $processingCart->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success">Marcar como Entregado</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-@else
-    <p>No hay carritos en proceso.</p>
-@endif
-
-
-
-
-
-
+        @if($processingCarts->count() > 0)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Usuario ID</th>
+                        <th>Total</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($processingCarts as $processingCart)
+                        <tr>
+                            <td>{{ $processingCart->id }}</td>
+                            <td>{{ $processingCart->usuario_id }}</td>
+                            <td>Q{{ $processingCart->total }}</td>
+                            <td>
+                                <form action="{{ route('cart.complete', $processingCart->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Marcar como Entregado</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>No hay carritos en proceso.</p>
+        @endif
+        <a href="{{ route('home') }}" class="btn btn-primary" style="margin-top: 20px;">Volver al Inicio</a>
     <!-- Cargar Google Maps API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMznw6Z7nd2ODWJv8WnYuE_MiAujSmLUc&callback=initMap" async defer></script>
 
